@@ -5,6 +5,8 @@ const prisma = new PrismaClient();
 async function main() {
   let event = await prisma.event.findFirst();
   let ticketType = await prisma.ticketType.findFirst();
+  let hotel = await prisma.hotel.findFirst();
+  let room = await prisma.room.findFirst();
   if (!event) {
     event = await prisma.event.create({
       data: {
@@ -44,6 +46,36 @@ async function main() {
         price: 600,
         isRemote: false,
         includesHotel: true,
+        createdAt: dayjs().toDate(),
+        updatedAt: dayjs().toDate(),
+      }
+    })
+  }
+  if(!hotel){
+    hotel = await prisma.hotel.create({
+      data: {
+        name: "Hotel California",
+        image: "https://media-cdn.tripadvisor.com/media/photo-s/16/1a/ea/54/hotel-presidente-4s.jpg",
+        createdAt: dayjs().toDate(),
+        updatedAt: dayjs().toDate(),
+      }
+    })
+  }
+  if(!room){
+    room = await prisma.room.create({
+      data: {
+        name: "Padrão",
+        capacity: 1,
+        hotelId: 1,
+        createdAt: dayjs().toDate(),
+        updatedAt: dayjs().toDate(),
+      }
+    })
+    room = await prisma.room.create({
+      data: {
+        name: "Presidencial",
+        capacity: 2,
+        hotelId: 1,
         createdAt: dayjs().toDate(),
         updatedAt: dayjs().toDate(),
       }
