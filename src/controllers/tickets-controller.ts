@@ -27,7 +27,6 @@ export async function getTickets(req: AuthenticatedRequest, res: Response, next:
 export async function createTicket(req: AuthenticatedRequest, res: Response, next: NextFunction): Promise<Response> {
   const { userId } = req;
   const { ticketTypeId } = req.body as InputTicketBody;
-  console.log(userId), console.log(ticketTypeId);
 
   try {
     const ticket = await ticketService.createTicket(userId, ticketTypeId);
