@@ -6,3 +6,4 @@ export function withoutVacanciesError(): ApplicationError {
     message: 'This activity is at capacity',
   };
 }
+console.log('teste');
