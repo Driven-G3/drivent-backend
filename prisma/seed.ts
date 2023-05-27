@@ -9,6 +9,7 @@ async function main() {
   let room = await prisma.room.findFirst();
   let activityRoom = await prisma.activityRoom.findFirst();
   let activity = await prisma.activity.findFirst();
+  // let activityEnrollment = await prisma.activityEnrollment.findFirst()
 
   if (!activityRoom) {
     await prisma.activityRoom.createMany({
@@ -88,6 +89,29 @@ async function main() {
       ],
     });
   }
+
+  // if (!activityEnrollment) {
+  //   await prisma.activityEnrollment.createMany({
+  //     data: [
+  //       {
+  //         ticketId: 1,
+  //         activityId: 1,
+  //       },
+  //       {
+  //         ticketId: 2,
+  //         activityId: 1,
+  //       },
+  //       {
+  //         ticketId: 3,
+  //         activityId: 2,
+  //       },
+  //       {
+  //         ticketId: 4,
+  //         activityId: 3,
+  //       }
+  //     ]
+  //   })
+  // }
 
   if (!event) {
     event = await prisma.event.create({

@@ -19,3 +19,14 @@ export async function getActivities(req: AuthenticatedRequest, res: Response) {
     return res.sendStatus(500);
   }
 }
+
+export async function postActivityEnrollment(req: AuthenticatedRequest, res: Response) {
+  const ticketId = req.body;
+  const activityId = req.body;
+  try {
+    const enrollment = await activitiesService.postActivityEnrollment(ticketId, activityId);
+    return res.send(enrollment);
+  } catch (error) {
+    return res.sendStatus(500);
+  }
+}
