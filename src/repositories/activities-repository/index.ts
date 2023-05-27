@@ -1,4 +1,4 @@
-import { Activity, ActivityRoom } from '@prisma/client';
+import { Activity, ActivityRoom, ActivityEnrollment } from '@prisma/client';
 import { prisma } from '@/config';
 
 async function getActivitiesRooms(): Promise<ActivityRoom[]> {
@@ -6,12 +6,26 @@ async function getActivitiesRooms(): Promise<ActivityRoom[]> {
 }
 
 async function getActivities(): Promise<Activity[]> {
-  return prisma.activity.findMany();
+  return prisma.activity.findMany({
+    include: {
+      Enrollment: {},
+    },
+  });
+}
+
+async function insertActivityEnrollment(ticketId: any, activityId: any) {
+  return await prisma.activityEnrollment.create({
+    data: {
+      ticketId,
+      activityId,
+    },
+  });
 }
 
 const activitiesRepository = {
   getActivitiesRooms,
   getActivities,
+  insertActivityEnrollment,
 };
 
 export default activitiesRepository;
