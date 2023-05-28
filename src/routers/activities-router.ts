@@ -4,7 +4,7 @@ import { getActivitiesRooms, getActivities, postActivityEnrollment } from '@/con
 
 const activitiesRouter = Router();
 
-// activitiesRouter.all('*', authenticateToken);
+activitiesRouter.all('*', authenticateToken);
 activitiesRouter.get('/rooms', getActivitiesRooms);
 activitiesRouter.get('/', getActivities);
 activitiesRouter.post('/enrollment', postActivityEnrollment);

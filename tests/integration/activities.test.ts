@@ -56,20 +56,12 @@ describe('GET /activities', () => {
       const payment = await createPayment(ticket.id, ticketType.price);
 
       const hotel = await createHotel();
-      const activities = await createActivity();
+      const activitieRoom = await createActivityRooms();
+      const activities = await createActivity(activitieRoom.id);
 
       const response = await server.get('/activities').set('Authorization', `Bearer ${token}`);
 
       expect(response.status).toEqual(httpStatus.OK);
-      //   expect(response.body).toEqual(expect({
-      //     eventId: expect.any(Number),
-      //     title: expect.any(String),
-      //     startsAt: expect.any(String),
-      //     endsAt: expect.any(String),
-      //     locatedAtId: expect.any(Number),
-      //     capacity: expect.any(Number),
-      //     Enrollment: [],
-      // }));
     });
   });
 });
@@ -108,8 +100,8 @@ describe('GET /activities/rooms', () => {
       const payment = await createPayment(ticket.id, ticketType.price);
 
       const hotel = await createHotel();
-      const activities = await createActivity();
-      const rooms = await createActivityRooms();
+      const activitieRoom = await createActivityRooms();
+      const activities = await createActivity(activitieRoom.id);
 
       const response = await server.get('/activities/rooms').set('Authorization', `Bearer ${token}`);
 
@@ -152,8 +144,8 @@ describe('POST /activities/enrollment', () => {
       const payment = await createPayment(ticket.id, ticketType.price);
 
       const hotel = await createHotel();
-      const activities = await createActivity();
-      console.log('IPIPIPIPIPIPIPIPOPOPOPOPO', activities);
+      const activitieRoom = await createActivityRooms();
+      const activities = await createActivity(activitieRoom.id);
       const activitiesEnrollment = await createActivityEnrollment(ticket.id, activities.id);
       const response = await server.get('/activities/rooms').set('Authorization', `Bearer ${token}`).send({
         activitiesEnrollment,
