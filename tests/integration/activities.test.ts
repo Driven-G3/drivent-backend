@@ -112,7 +112,7 @@ describe('GET /activities/rooms', () => {
 
 describe('POST /activities/enrollment', () => {
   it('should respond with status 401 if no token is given', async () => {
-    const response = await server.get('/activities');
+    const response = await server.post('/activities/enrollment');
 
     expect(response.status).toBe(httpStatus.UNAUTHORIZED);
   });
@@ -120,7 +120,7 @@ describe('POST /activities/enrollment', () => {
   it('should respond with status 401 if given token is not valid', async () => {
     const token = faker.lorem.word();
 
-    const response = await server.get('/activities').set('Authorization', `Bearer ${token}`);
+    const response = await server.post('/activities/enrollment').set('Authorization', `Bearer ${token}`);
 
     expect(response.status).toBe(httpStatus.UNAUTHORIZED);
   });
@@ -129,7 +129,7 @@ describe('POST /activities/enrollment', () => {
     const userWithoutSession = await createUser();
     const token = jwt.sign({ userId: userWithoutSession.id }, process.env.JWT_SECRET);
 
-    const response = await server.get('/activities').set('Authorization', `Bearer ${token}`);
+    const response = await server.post('/activities/enrollment').set('Authorization', `Bearer ${token}`);
 
     expect(response.status).toBe(httpStatus.UNAUTHORIZED);
   });
@@ -147,9 +147,11 @@ describe('POST /activities/enrollment', () => {
       const activitieRoom = await createActivityRooms();
       const activities = await createActivity(activitieRoom.id);
       const activitiesEnrollment = await createActivityEnrollment(ticket.id, activities.id);
-      const response = await server.get('/activities/rooms').set('Authorization', `Bearer ${token}`).send({
-        activitiesEnrollment,
-      });
+      const body = {
+        ticketId: ticket.id,
+        activityId: activities.id,
+      };
+      const response = await server.post('/activities/enrollment').set('Authorization', `Bearer ${token}`).send(body);
 
       expect(response.status).toEqual(httpStatus.OK);
     });
