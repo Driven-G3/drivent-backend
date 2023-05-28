@@ -25,7 +25,6 @@ export async function postActivityEnrollment(req: AuthenticatedRequest, res: Res
   const { ticketId } = req.body;
   const { activityId } = req.body;
   try {
-    console.log(ticketId, activityId);
     const enrollment = await activitiesService.postActivityEnrollment(ticketId, activityId);
     return res.status(httpStatus.OK).send(enrollment);
   } catch (error) {
